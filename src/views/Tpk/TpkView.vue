@@ -1,3 +1,56 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import ButtonDefault from '@/components/Buttons/ButtonDefault.vue'
+import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
+
+const dataSoalTpk = ref([])
+const dashboard = ref('Dashboard')
+const isLoading = ref(true) // Tambahkan state untuk loading
+
+// Fungsi untuk mengambil data soal
+const fetchDataSoalTpk = async () => {
+  isLoading.value = true // Set loading menjadi true saat mulai fetch data
+  try {
+    const response = await axios.get('http://sipra-event.test/api/questions/tpk')
+    // Menyimpan data dari API ke dataSoalTpk
+    dataSoalTpk.value = response.data.data // Menggunakan response.data.data sesuai format JSON
+    console.log(response.data.data) // Untuk debugging
+  } catch (error) {
+    console.error('Failed to fetch data soal tpk: ', error)
+  } finally {
+    isLoading.value = false // Set loading menjadi false setelah fetch selesai
+  }
+}
+
+// Panggil fetch data saat komponen dimuat
+onMounted(() => {
+  fetchDataSoalTpk()
+})
+
+// Fungsi Edit dan Delete
+const editSoal = (id) => {
+  // Arahkan ke halaman edit soal dengan ID
+  window.location.href = `/tpk/edit/${id}`
+}
+
+const deleteSoal = (id) => {
+  if (confirm('Apakah Anda yakin ingin menghapus soal ini?')) {
+    axios
+      .delete(`http://sipra-event.test/api/questions/tpk/${id}`)
+      .then(() => {
+        alert('Soal berhasil dihapus')
+        fetchDataSoalTpk() // Refresh data setelah dihapus
+      })
+      .catch((error) => {
+        console.error('Failed to delete soal:', error)
+        alert('Terjadi kesalahan saat menghapus soal.')
+      })
+  }
+}
+</script>
+
 <template>
   <DefaultLayout>
     <BreadcrumbDefault :pageTitle="dashboard" />
@@ -58,18 +111,20 @@
               <td class="py-4 px-4 text-black dark:text-white" v-else>Sulit</td>
               <td class="py-4 px-4 text-black dark:text-white space-x-4">
                 <!-- Tombol Edit -->
-                <ButtonDefault
-                  label="Edit"
-                  custom-classes="bg-black text-white rounded-lg text-sm font-semibold transition-all duration-300 ease-in-out transform hover:bg-gray-800 hover:scale-105 shadow-lg hover:shadow-xl"
-                  :route="`/tpk/edit/${soal.id}`"
+                <button
                   @click="editSoal(soal.id)"
-                />
+                  class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+                >
+                  Edit
+                </button>
+
                 <!-- Tombol Hapus -->
-                <ButtonDefault
-                  label="Hapus"
-                  custom-classes="bg-red-600 text-white rounded-lg text-sm font-semibold transition-all duration-300 ease-in-out transform hover:bg-red-500 hover:scale-105 shadow-lg hover:shadow-xl"
+                <button
                   @click="deleteSoal(soal.id)"
-                />
+                  class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+                >
+                  Hapus
+                </button>
               </td>
             </tr>
           </tbody>
@@ -78,56 +133,3 @@
     </div>
   </DefaultLayout>
 </template>
-
-<script setup>
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import ButtonDefault from '@/components/Buttons/ButtonDefault.vue'
-import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
-
-const dataSoalTpk = ref([])
-const dashboard = ref('Dashboard')
-const isLoading = ref(true) // Tambahkan state untuk loading
-
-// Fungsi untuk mengambil data soal
-const fetchDataSoalTpk = async () => {
-  isLoading.value = true // Set loading menjadi true saat mulai fetch data
-  try {
-    const response = await axios.get('http://sipra-event.test/api/questions/tpk')
-    // Menyimpan data dari API ke dataSoalTpk
-    dataSoalTpk.value = response.data.data // Menggunakan response.data.data sesuai format JSON
-    console.log(response.data.data) // Untuk debugging
-  } catch (error) {
-    console.error('Failed to fetch data soal tpk: ', error)
-  } finally {
-    isLoading.value = false // Set loading menjadi false setelah fetch selesai
-  }
-}
-
-// Panggil fetch data saat komponen dimuat
-onMounted(() => {
-  fetchDataSoalTpk()
-})
-
-// Fungsi Edit dan Delete
-const editSoal = (id) => {
-  // Arahkan ke halaman edit soal dengan ID
-  window.location.href = `/tpk/edit/${id}`
-}
-
-const deleteSoal = (id) => {
-  if (confirm('Apakah Anda yakin ingin menghapus soal ini?')) {
-    axios
-      .delete(`http://sipra-event.test/api/questions/tpk/${id}`)
-      .then(() => {
-        alert('Soal berhasil dihapus')
-        fetchDataSoalTpk() // Refresh data setelah dihapus
-      })
-      .catch((error) => {
-        console.error('Failed to delete soal:', error)
-        alert('Terjadi kesalahan saat menghapus soal.')
-      })
-  }
-}
-</script>
