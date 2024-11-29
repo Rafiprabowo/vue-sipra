@@ -36,7 +36,7 @@ const loadOptions = () => {
     options.value = Array.from(optionsEl.options).map((option) => ({
       value: option.value,
       text: option.innerText,
-      selected: option.selected
+      selected: option.selected,
     }))
   }
 }
@@ -168,7 +168,7 @@ const selectedValues = () => {
                       <div
                         :class="[
                           'relative flex w-full items-center border-l-2 border-transparent p-2 pl-2',
-                          option.selected ? 'border-primary' : ''
+                          option.selected ? 'border-primary' : '',
                         ]"
                       >
                         <div class="flex w-full items-center">

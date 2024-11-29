@@ -91,7 +91,6 @@ const sidebarStore = useSidebarStore()
       </div>
 
       <div class="flex items-center gap-3 2xsm:gap-7">
-
         <!-- User Area -->
         <DropdownUser />
         <!-- User Area -->

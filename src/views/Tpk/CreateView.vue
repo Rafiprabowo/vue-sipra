@@ -60,7 +60,7 @@ const submitForm = async () => {
 
   try {
     const response = await axios.post('http://sipra-event.test/api/questions/tpk', payload)
-    
+
     // Reset form setelah berhasil
     formData.value = {
       question_text: '',
@@ -93,11 +93,7 @@ const submitForm = async () => {
 <template>
   <DefaultLayout>
     <BreadcrumbDefault :pageTitle="pageTitle" />
-    <ButtonDefault
-      label="Kembali"
-      route="/tpk"
-      custom-classes="bg-primary text-white mb-4"
-    />
+    <ButtonDefault label="Kembali" route="/tpk" custom-classes="bg-primary text-white mb-4" />
 
     <!-- Alert -->
     <div v-if="showAlert" class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded">

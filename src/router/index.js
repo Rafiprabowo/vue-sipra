@@ -3,6 +3,7 @@ import AdminView from '../views/Dashboard/AdminView.vue'
 import TpkView from '../views/Tpk/TpkView.vue'
 import CreateView from '@/views/Tpk/CreateView.vue'
 import EditView from '@/views/Tpk/EditView.vue'
+import QuizView from '@/views/Ujian/QuizView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -14,17 +15,22 @@ const router = createRouter({
     {
       path: '/tpk',
       name: 'tpk',
-      component: TpkView
+      component: TpkView,
     },
     {
       path: '/tpk/tambah',
       name: 'tambah tpk',
-      component: CreateView
+      component: CreateView,
     },
     {
       path: `/tpk/edit/:id`,
       name: 'edit tpk',
-      component: EditView 
+      component: EditView,
+    },
+    {
+      path: '/student/cbt/tpk',
+      name: 'Test',
+      component: QuizView,
     },
     {
       path: '/about',

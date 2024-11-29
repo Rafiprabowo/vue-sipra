@@ -23,7 +23,7 @@ const handleItemClick = (index) => {
           @click="handleItemClick(index)"
           class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
           :class="{
-            '!text-white': childItem.label === sidebarStore.selected
+            '!text-white': childItem.label === sidebarStore.selected,
           }"
         >
           {{ childItem.label }}

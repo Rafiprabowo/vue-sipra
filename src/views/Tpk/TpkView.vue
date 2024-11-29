@@ -11,7 +11,6 @@ const isLoading = ref(false) // Menambahkan state loading untuk import
 const uploadLoading = ref(false) // State loading khusus untuk proses upload
 const uploadedFiles = ref([])
 
-
 // Fungsi untuk mengambil data soal dari API
 const fetchDataSoalTpk = async () => {
   isLoading.value = true
@@ -54,7 +53,7 @@ const uploadFile = async (event) => {
     // Segarkan data setelah upload
     fetchDataSoalTpk()
     uploadedFiles.value.push(file.name)
-     // Reset input file setelah berhasil diupload
+    // Reset input file setelah berhasil diupload
     event.target.value = null
   } catch (error) {
     console.log('Terjadi kesalahan saat mengupload file', error)
